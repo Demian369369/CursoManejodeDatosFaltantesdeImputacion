@@ -1,0 +1,48 @@
+(
+    nhanes_df
+    .select_columns("height", "weight", "gender", "diabetes", "general_health_condition")
+    .sort_values(
+        by=['gender','diabetes','general_health_condition','weight'],
+        ascending=True
+    )
+    .groupby(["gender", "general_health_condition"], dropna=False)
+    .apply(lambda x: x.ffill())
+)
+
+Imputacion dentro de Dominios
+Para que la imputacion tenga mas sentido debemos considerar las variables categoricas. Podemos tratar las variables categoricas como dominios donde nuestra variable de interes toma solo valores dentro del mismo. Es decir, en cada categoria puede existir un rango distinto de valores para la variable de interes. Por lo tanto, haciendo imputaciones dentro de los dominios puedes conservar la estructura de los datos y las relaciones entre las variables.
+
+Ejemplo de imputacion dentro de dominios
+Para este caso, la variable a la que se va a imputar los datos faltantes es a weight
+
+(
+    nhanes_df
+    # seleccionamos las variables. Hay dos categoricas y tres numericas
+    .select_columns('weight', 'height', 'gender', 'diabetes', 'general_health_condition')
+    # ordenamos los grupos segun nuestro interes 
+    # para este caso, primero el genero, seguido de diabetes, su estado de salud y finalmente la altura
+    .sort_values(
+        by = ['gender', 'diabetes', 'general_health_condition', 'height'],
+        ascending = True
+    )# realizamos la imputacion con el metodo transform
+    .transform_column(
+        'weight',   # variable de interes
+        lambda x: x.ffill(),    # imputacion hacia adelante
+        elementwise = False     # pasa una serie y no un unico valor
+    )
+)
+
+
+Untitled (5).png
+
+De esta manera estamos garantizando que la imputacion esta tomando valores adecuados para cada dominio. Sin embargo, puede ocurrir que al traerse el valor antecesor se obtenga un valor de otro dominio generando ruido en los datos. Para ello se utiliza la funcion groupby lo cual permite agrupar los datos por las variables categoricas y luego ordenarlos por las variables numericas para asi realizar la imputacion y evitar este problema.
+
+Imputacion por llenado hacia atras y hacia adelante (Hot Deck y Cold Deck)
+Consiste en sustituir los valores faltantes con valores completos que estan antes o despues.
+
+Ventajas
+Rapido y facil de implementar
+Los datos imputados no son constantes, van a depender de los valores alrededor (arriba, abajo, a la derecha o a la izquierda).
+Existen trucos para evitar romper las relaciones entre variables.
+Desventajas
+Las relaciones multivariables pueden ser distorsionadas

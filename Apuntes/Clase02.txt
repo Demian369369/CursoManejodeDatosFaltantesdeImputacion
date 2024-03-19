@@ -1,0 +1,7 @@
+NHANES (National Health and Nutrition Examination Survey) es una encuesta realizada por el gobierno de los Estados Unidos que recopila información sobre la salud y la nutrición de la población estadounidense. En Python, NHANES se refiere al conjunto de datos de esta encuesta que se han puesto a disposición del público en formato de archivo.
+
+El conjunto de datos de NHANES en Python puede ser utilizado por investigadores, científicos de datos y profesionales de la salud para realizar análisis estadísticos y epidemiológicos. El conjunto de datos incluye información sobre una amplia variedad de variables, como edad, sexo, raza, antecedentes médicos, medidas antropométricas, resultados de laboratorio y encuestas de dieta.
+
+En Python, existen paquetes especializados que permiten a los usuarios cargar y manipular los datos de NHANES, como Pandas y NumPy. Además, también existen librerías de visualización de datos, como Matplotlib y Seaborn, que pueden utilizarse para visualizar los datos de NHANES.
+
+En resumen, NHANES en Python es una herramienta útil para la investigación en salud y nutrición, que permite a los usuarios realizar análisis estadísticos y epidemiológicos basados en datos confiables y de gran calidad.

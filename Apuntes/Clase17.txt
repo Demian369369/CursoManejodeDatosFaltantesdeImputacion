@@ -1,0 +1,10 @@
+Conclusiones
+
+Aprendiste que trabajar con valores faltantes representa un trabajo con tratamiento especial.
+Conociste las consideraciones al trabajar con los distintos tipos de valores faltantes (MCAR,MAR Y MNAR).
+Lograste explorar los tipos de valores faltantes a través de visualizaciones y pruebas estadísticas nuevas.
+Aprendiste a tratar valores categóricos al momento de realizar imputaciones.
+Lograste identificar los distintos tipos de imputación de valores faltantes: con base en donantes y modelos.
+Realizaste múltiples imputaciones a través de distintos algoritmos.
+Entendiste las ventajas y desventajas de cada herramienta de imputación.
+

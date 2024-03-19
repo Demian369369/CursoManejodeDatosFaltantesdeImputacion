@@ -1,0 +1,178 @@
+Proceso para la Imputacion basada en Modelos
+Cuando se utiliza un modelo para imputar, en principio no aceptan valores faltantes por lo que el primer paso es imputar los valores faltantes con dummies. Luego se utiliza el modelo y se va iterando hasta que los valores que hemos sustituido con dummies no cambien. Justo alli se llega a una optima imputacion.
+
+Preparacion de los datos
+
+# preparamos los datos de la variable a imputar
+
+nhanes_model_df= (
+    nhanes_df
+    .select_columns('height', 'weight', 'gender', 'age')    # seleccionamos columnas
+    .sort_values(by='height')   # ordenamos en funcion de height
+    #   sustituir los valores faltantes con dummies
+    .transform_column(  
+        'weight',   # variable de interes
+        lambda x: x.ffill(),
+        elementwise = False
+    )   #   matriz de sombra con el sufijo imp
+    .missing.bind_shadow_matrix2(
+        True,
+        False,
+        suffix='_imp',
+        only_missing=False   # matriz de sombra para todas las variables
+    )
+)
+
+nhanes_model_df
+
+
+Untitled (8).png
+
+Preparacion del modelo
+
+# para este ejemplo vamos a utilizar la regresion lineal como modelo
+
+height_ols = (
+    nhanes_model_df
+    .pipe(
+        lambda df: smf.ols('height ~ weight + gender + age', data=df)
+    )
+    .fit()
+)
+Generacion de los valores imputados mediante el modelo
+
+# obtener solo las observaciones con valores nulos en la variable height
+
+(
+    nhanes_model_df
+    .pipe(
+        lambda df: df[df.height.isna()]
+    )
+)
+
+
+Untitled (9).png
+
+
+# utilizamos el modelo para generar los valores imputados
+
+ols_imputed_values = (
+    nhanes_model_df
+    .pipe(
+        lambda df: df[df.height.isna()]
+    )
+    # aplicamos el modelo. Los valores imputados se redondean debido a que son enteros
+    .pipe( 
+    lambda df: height_ols.predict(df).round()
+    )
+)
+
+ols_imputed_values
+
+
+Untitled (10).png
+
+Sustitucion de los valores imputados en el Dataset
+
+# sustituimos los valores imputados generados con 
+# el modelo en la variable asociada
+
+nhanes_model_df.loc[nhanes_model_df.height.isna(), ['height']] = ols_imputed_values
+
+nhanes_model_df
+
+
+Untitled (11).png
+
+Visualizacion de los valores imputados
+
+(
+    nhanes_model_df
+    .missing
+    .scatter_imputation_plot(
+        x = 'weight',   # variable independiente
+        y = 'height'    # variable objetivo
+    )
+)
+
+
+Untitled (12).png
+
+La grafica nos muestra la imputacion de la variable height en funcion de la variable weight. Observamos dos bloques de datos lo que podria indicar que se trata de la diferencia en peso entre mujeres y hombres.
+
+El siguiente paso para aprovechar mejor el modelo es repetir todos los pasos anteriores pero en la preparacion de los datos, en vez de utilizar los valores dummies para weight, utilizamos la variable height con los valores imputados por el modelo. De esta manera ahora se busca imputar los valores de la variable weight en vez de los de height que ya han sido imputados.
+
+Se ordeno el dataset, se rellenaron los valores de weigth con un ffill() y se anadireon las columnas "_imp".
+Se creo height_ols que es un modelo predictivo para la variable height tomando en cuenta weight, gender y age basado en Ordinary Least Squares (OLS, una regrecion lineal).
+Del dataset se seleccionaron solo las tuplas donde faltaba la altura y se lleno usando el modelo predictivo.
+Finalmente se llenaron los valores faltantes del dataset original con los valores calculados.
+
+Imputacion basada en Modelos
+Ventajas
+Mejora sobre la imputacion basada en donantes sencilla
+Presenta gran variedad de opciones para imputar. Puedes elegir tecnicas de Machine Learning como puede ser un SVM o tecnicas de Deep Learning como Redes Neuronales.
+Preserva la relacion entre las variables
+Desventajas
+Puede subestimar la varianza. Tambien arrastra todos los defecto que presente el modelo.
+Los modelos funcionan mal si las variables observadas y faltantes son independientes.
+Es mas complicado que la imputacion basada en donantes
+
+nhanes_model_df = (
+    nhanes_df.select_columns('height','weight','gender','age')
+    .sort_values(by='height')
+    .transform_column(
+        'weight',
+        lambda x: x.ffill(),
+        elementwise=False
+    )
+    .missing.bind_shadow_matrix(
+        True,
+        False,
+        suffix='_imp',
+        only_missing=False
+    )
+)
+nhanes_model_df
+
+height_ols = (
+    nhanes_model_df
+    .pipe(lambda df: smf.ols('height ~ weight + gender + age', data=df))
+    .fit()
+)
+
+ols_imputed_values = (
+    nhanes_model_df
+    .pipe(
+        lambda df: df[df.height.isna()]
+    )
+    .pipe(
+        lambda df: height_ols.predict(df).round()
+    )
+)
+ols_imputed_values
+
+nhanes_model_df.loc[nhanes_model_df.height.isna(), ['height']] = ols_imputed_values
+nhanes_model_df
+
+(
+    nhanes_model_df.missing.scatter_imputation_plot(
+        x='weight',
+        y='height'
+    )
+)
+
+Hacer imputación con valores dummies (ffill o bfill) a una (o más) de las variables con datos faltantes con la matriz de confusión -> esta/s variable/s no son las que se van a predecir (imputar) sino se rellenan porque la regresión linean no permite NaN, (sirven de relleno provisional)
+Ajustar un modelo de regresión lineal (ajustar ecuación de la recta) para la variables a predecir (la que no fue imputada con valores dummies)
+Se aplica el modelo de regresión lineal (previamente ajustado ) para predecir la variable con datos faltantes
+Se le pasa al DF original los nuevos valores imputados de la variable que se esta prediciendo (la que tenía valores faltantes)
+Se grafica con un scatter plot la imputación para revisar
+Se continua con la imputación de las otras variables
+
+Se hace otra copia del DF original
+Se le pasan a la columna correspondiente los valores imputados de la variable anterior predicha
+Crear en el nuevo DF una matriz de sombra
+Nota: Si son 2 variables no hay necesidad de imputar con dummies porque ya una de las dos fue imputada con regresión lineal y sirve de "soporte" para imputar la que previamente se relleno con dummies. Si hay más de 2 variables, se deben rellenar con dummies, dejar una como variable a imputar por ols y pasar al nuevo DF la variable recien imputada
+Se ajusta el modelo de regresión a la nueva variable a predecir (imputar)
+Se imputa (se predice) la variable con la regresión lineal ajustada
+Se le pasan los valores recien imputados al DF
+Se grafica para revisar

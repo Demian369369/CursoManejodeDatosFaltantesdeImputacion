@@ -1,0 +1,43 @@
+Visualizacion de la imputacion por KNN
+Creamos la matriz de sombra y luego graficamos mediante un scattterplot
+
+(   # matriz de sombra
+    pd.concat(
+        [
+            nhanes_df_knn,
+            nhanes_df.missing.create_shadow_matrix2(True, False, suffix='_imp', only_missing=True)
+        ],
+        axis=1
+    )   # visualizacion mediantes un scatterplot de dos variables numericas
+    .missing.scatter_imputation_plot(
+        x = 'height',
+        y = 'weight'
+    )
+)
+
+
+Untitled (5).png
+
+ Imputación por KNN en Python
+
+knn_imputer = sklearn.impute.KNNImputer()
+
+nhanes_df_knn = nhanes_transformed_df.missing.sort_variables_by_missingness(ascending=True).copy(deep=True)
+
+nhanes_df_knn.iloc[:, :] = knn_imputer.fit_transform(nhanes_transformed_df.missing.sort_variables_by_missingness(ascending=True)).round()
+nhanes_df_knn.head(20)
+
+(
+    pd.concat(
+        [
+            nhanes_df_knn,
+            nhanes_df.missing.create_shadow_matrix(True, False, suffix='_imp',only_missing=True)
+        ],
+        axis=1
+    )
+     .missing.scatter_imputation_plot(
+         x='height',
+         y='weight',
+     )   
+        
+)

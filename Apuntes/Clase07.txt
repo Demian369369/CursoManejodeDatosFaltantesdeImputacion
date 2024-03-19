@@ -1,0 +1,17 @@
+Tratamiento de variables categóricas para imputación: one-hot encoding
+5-10-20 categorias → Ordinal encoding
+
+100-1000-2000-3000 categorias → One Hot Encoding
+
+Ordinal Encoder: El OrdinalEncoder se utiliza cuando existe un orden o jerarquía natural entre las categorías de una variable categórica. Esto significa que las categorías tienen una relación de orden y se pueden asignar valores numéricos que reflejen este orden. Algunos ejemplos de variables categóricas donde se puede aplicar el OrdinalEncoder son:
+Niveles de educación: como "Primaria", "Secundaria", "Universidad", donde hay un orden lógico de menor a mayor nivel educativo.
+Evaluaciones de rendimiento: como "Bajo", "Medio", "Alto", donde hay una escala ordinal de bajo a alto rendimiento.
+One-Hot Encoder: El OneHotEncoder se utiliza cuando no existe un orden o jerarquía natural entre las categorías de una variable categórica, y se desea crear variables binarias para cada categoría. Esto permite representar cada categoría como una columna independiente, donde un valor de 1 indica la presencia de esa categoría y un valor de 0 indica la ausencia. Algunos ejemplos de variables categóricas donde se puede aplicar el OneHotEncoder son:
+Colores: como "Rojo", "Verde", "Azul", donde cada color se representa como una columna separada en el conjunto de datos codificado en caliente.
+Países: como "Estados Unidos", "Canadá", "México", donde cada país se representa como una columna separada indicando su presencia o ausencia.
+
+Depende mucho del contexto en el que nos encontremos trabajando:
+
+Si tengo 5, 10 o más categorías, quizá un ++Ordinal Encoding++ sería la opción, en la que establecemos un número para cada una de ellas.
+Si tengo 100 o más categorías, quizá un ++OneHot Encoding++ sería una mejor opción, porque voy a tener una categoría por cada columna. Cada una va a tener 1 y 0, entonces el peso de estas variables va a ser el mismo. El inconveniente en este caso es que vas a necesitar crear una nueva columna para cada instancia de tu variable, por lo que requerirás mucho espacio. Esto se puede solventar utilizando matrices especiales matrices sparse.
+Dependiendo de tus recursos y métodos que utilices puede ser viable o no.

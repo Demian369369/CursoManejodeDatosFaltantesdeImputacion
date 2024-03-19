@@ -1,0 +1,28 @@
+Tratamiento de Variables categoricas para imputacion: Codificacion Ordinal
+La mayor parte de las variables categoricas son cadenas de textos y por tanto realizar operaciones con ellas no es trivial. Es asi como surge la necesidad de convertir o codificar las cadenas de texto a numeros de manera que los algoritmos puedan entenderlos o asociarlos
+
+Codificacion Ordinal
+Consiste en mapear cada elemento unico de texto a un numero entero. Una vez realizada la codificacion podemos comenzar el proceso de imputacion introduciendo los datos a un algoritmo de imputacion
+
+Tratamiento de variables categóricas para imputación: codificación ordinal
+La mayor parte de las variables categóricas son cadenas de texto.
+Realizar operaciones con cadenas de texto NO es trivial.
+Surge la necesidad de convertir o codificar las cadenas de texto a números.
+Codificación ordinal
+
+Asignarle un valor numérico a cada categoría
+Siempre antes de encodear hacerle una copia al df
+
+nhanes_transformed_df = (
+    pd.DataFrame(
+        categorical_tranformer.fit_transform(nhanes_df),
+        columns=categorical_tranformer.get_feature_names_out(),
+        index = nhanes_df.index
+    )
+    .rename_columns(
+        function = lambda x: x.removeprefix('ordinalencoder__')
+    )
+        .rename_columns(
+        function = lambda x: x.removeprefix('remainder__'))
+) # Apply categorical transformer to the data
+nhanes_transformed_df.head()

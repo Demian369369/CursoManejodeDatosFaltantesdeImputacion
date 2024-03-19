@@ -1,0 +1,37 @@
+Métodos de imputación de valores faltantes
+¿Qué son las imputaciones con base en el donante?
+
+Completa los valores que faltan para una unidad dada copiando los valores observados de otra unidad, el donante.
+
+¿Qué son las imputaciones con base en modelos?
+
+El objetivo de la imputación basada en modelos es encontrar un modelo predictivo para cada variable objetivo en el conjunto de datos que contiene valores faltantes.
+
+La interpolación puede ser tanto basada en donante como basada en modelo. Ambos enfoques se utilizan para estimar los valores faltantes utilizando información de las observaciones existentes.
+
+
+Métodos de imputación avanzados KNN (K-Nearest Neighbors), MICE (Multiple Imputation by Chained Equations), NN (Neural Networks) y SVM (Support Vector Machines):
+
+KNN (K-Nearest Neighbors): El método KNN es una técnica de imputación que se basa en encontrar los K vecinos más cercanos a un valor faltante y utilizar los valores de esos vecinos para imputar el valor faltante. En el contexto de la imputación, los vecinos se seleccionan en función de la similitud de las características de los registros completos. KNN es una técnica flexible que puede utilizarse tanto para variables numéricas como categóricas.
+MICE (Multiple Imputation by Chained Equations): MICE es un enfoque de imputación avanzado que utiliza modelos estadísticos para imputar los valores faltantes. En MICE, los valores faltantes se imputan en varias etapas utilizando modelos específicos para cada variable con valores faltantes. En cada etapa, se imputa una variable a la vez, utilizando los valores observados y las imputaciones anteriores como entrada para el modelo. El proceso se repite varias veces hasta que se obtengan las imputaciones finales.
+NN (Neural Networks): Los modelos de redes neuronales (NN) también se utilizan en la imputación avanzada de valores faltantes. Estos modelos son capaces de aprender patrones y relaciones complejas en los datos y, por lo tanto, pueden ser efectivos para imputar valores faltantes. Las redes neuronales pueden ser entrenadas en conjuntos de datos completos para luego ser utilizadas para imputar los valores faltantes en nuevos conjuntos de datos.
+SVM (Support Vector Machines): Las Máquinas de Vectores de Soporte (SVM) son un método de aprendizaje supervisado utilizado en diversos problemas, incluida la imputación de valores faltantes. Las SVM pueden ser aplicadas para imputar valores faltantes al entrenar un modelo utilizando los datos completos y luego utilizar ese modelo para predecir los valores faltantes en nuevos conjuntos de datos.
+Estos métodos de imputación avanzada son utilizados cuando se necesita manejar datos con valores faltantes de manera más sofisticada y precisa. Cada método tiene sus propias características y supuestos, por lo que es importante considerar el contexto y las características de los datos al seleccionar el método de imputación más adecuado.
+
+El método de interpolación es un enfoque común utilizado para la imputación de datos faltantes. En lugar de reemplazar los valores faltantes por un valor constante o un valor estimado basado en otras observaciones, la interpolación utiliza técnicas de interpolación matemática para estimar los valores faltantes en función de los valores observados cercanos en el tiempo o en el espacio.
+
+La interpolación implica crear una función continua que pasa a través de los puntos de datos conocidos y luego estimar los valores faltantes en función de esta función continua. Hay varias técnicas de interpolación que se pueden utilizar, y la elección depende del tipo de datos y la estructura de los mismos. Algunas técnicas comunes de interpolación incluyen:
+
+Interpolación lineal: La técnica más simple, que asume una relación lineal entre los puntos de datos conocidos y utiliza una línea recta para conectar los puntos adyacentes.
+
+Interpolación polinómica: Utiliza polinomios para conectar los puntos conocidos y estimar los valores faltantes. Los polinomios de diferentes órdenes, como lineales, cuadráticos o cúbicos, pueden utilizarse según la complejidad de los datos.
+
+Interpolación spline: Utiliza una función spline, que es una curva suave definida por segmentos polinómicos, para conectar los puntos conocidos. La interpolación spline es más flexible y puede adaptarse mejor a patrones no lineales en los datos.
+
+Cabe mencionar que la interpolación tiene sus limitaciones y supone que existe una relación continua y suave entre los puntos de datos. En algunos casos, como datos con patrones complejos o ruido significativo, la interpolación puede no ser la mejor opción y pueden requerirse enfoques más avanzados.
+
+Es importante evaluar cuidadosamente los datos y considerar otros métodos de imputación, como la media, la mediana, la moda o algoritmos más sofisticados, según la naturaleza de los datos faltantes y el contexto del problema.
+
+
+https://rpubs.com/wilsonsr/780105#:~:text=Imputaci%C3%B3n%20por%20interpolaci%C3%B3n%3A%20se%20estiman,v%C3%A1lido%20despu%C3%A9s%20del%20valor%20perdido
+

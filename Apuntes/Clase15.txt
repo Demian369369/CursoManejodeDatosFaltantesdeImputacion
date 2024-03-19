@@ -1,0 +1,82 @@
+Algo que no realizamos mas en las visualizaciones de nuestros scatter plot, fue visualizar el 'show_marginal', para ver como nuestros valores imputados afectaban la curtosis de nuestra columna imputada, y tal cual vimos con la curtosis en la unica ocasión que evaluamos esto que fue con la imputacion por la media, en las imputaciones por modelos, al revisar que forma tomaron los valores faltantes, aparecen distribuciones bimodales con curtosis leptocurticas, si la unicamente curtosis leptocurticas ya representaba un problema en la imputacion por media, muy posiblemente ahora aun mas sumado a la bimodal.
+
+No es que diga que este malo lo visto, pero quizas no usamos los mejores estimadores y estrategias dentro de nuestros modelos para el caso analizado, esto debido a lo corto del curso, F por los que queremos cursos que duren mas.
+
+La imputacion por KNN si tuvo una distribucion bastante parecida entre los valores imputados y los que ya teniamos, asi que por facilidad de uso y resultados obtenidos quizas por esto sea la mas utilizada como indico el profesor.
+
+
+Como realmente imputa los valores este modelo?
+suponga que el dataset contiene multiples variables, unas con valores faltantes y otras completas.
+El algoritmo asume que todas las variables tienen valores completos excepto una, entonces predice la variable con valores faltantes (target) en funcion del resto de variables (predictoras).
+Continua a la siguiente variable con valores faltantes, asume que las demas estan completas, utiliza los valores de la variable anteriormente imputada y predice la variable con valores faltantes en funcion del resto de variables
+Continua con el proceso hasta conseguir imputar todas las variables del dataset
+Este algoritmo tambien se conoce como Imputador Iterable
+
+Creamos el imputador con MICE
+
+# crea las copias, las analiza y regresa un solo conjunto de datos. 
+# Tambien puedes pedir que retorne todos las copias 
+
+mice_imputer = sklearn.impute.IterativeImputer(
+    estimator=BayesianRidge(),  # metodo seleccionado para estimar los missing
+    initial_strategy='mean',    # estimador seleccionado
+    imputation_order='ascending'# ordena las variables segun la cantidad de valores faltantes
+    
+)
+Copia de los datos transformados
+
+# creamos una copia de los datos ya transformado
+
+nhanes_mice_df = nhanes_transformed_df.copy(deep=True)
+Ajuste, transformacion y sustitucion de los datos imputados
+
+# ajustar y transformar los datos
+
+# puedes pasar como parametro nhanes_df o nhanes_mice_df
+# por defecto pasamos nhanes_df porque sobreescribe los valores del dataframe que copiamos
+# redondeamos los numeros en este caso
+# agrega los valores imputados al dataset
+
+nhanes_mice_df.iloc[:, :] =  mice_imputer.fit_transform(nhanes_transformed_df).round()
+
+nhanes_mice_df
+
+
+Untitled (1).png
+
+Matriz de sombra para la Visualizacion
+
+# Matriz de sombra sobre los datos para la visualizacion
+
+# guradamos toda la operacion en el mismo dataframe
+nhanes_mice_df = pd.concat( # concatenar los datos imputados y los datos originales
+    [
+        nhanes_mice_df,
+        nhanes_df.missing.create_shadow_matrix2(
+            True,
+            False,
+            only_missing=False,
+            suffix='_imp',
+        )
+    ],
+    axis=1 # aplica sobre la matriz de sombra
+)
+Visualizacion de los valores imputados
+
+# Visualizacion de la variable height y weight 
+
+nhanes_mice_df.missing.scatter_imputation_plot(
+    x = 'height',
+    y = 'weight'
+)
+
+
+Untitled (2).png
+
+Vemos que la imputacion es similar a la Imputacion KNN con la diferencia que este ultimo agrupa cierto valores en una zona. Depende de un analisis exploratorio tanto de los datos completos como de los faltantes elegir cual de los dos metodos es el que mejor se ajusta a los datos.
+
+Imputacion Multiple por Ecuaciones Encadenadas (MICE)
+Permite preserva las relaciones entre las variables y por tanto es preferido sobre las imputaciones simples. Consiste en tratar inicialmente con un conjunto de datos con valores faltantes, luego crea copias de dicho conjunto de datos a los que vas a imputar valores para obtener copias con valores completos, analizas los resultados y finalmente agrupas los resultados de cada conjunto de datos para dar un informe con intervalos de confianza que contribuyan a la variabilidad de los datos.
+
+
+

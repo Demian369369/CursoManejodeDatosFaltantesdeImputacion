@@ -1,0 +1,6 @@
+ El problema de trabajar con valores faltantes
+Aprenderemos a imputar valores para datos faltantes.
+Ignorar a los valores faltantes puede introducir sesgos en tus análisis y modelos.
+Valor estimado sobreestimado. Valor real subestimado. Valor estimado
+Múltiples de los algoritmos disponibles fallarán.
+Estimar los valores ausentes con base en los valores válidos de otras variables y/o casos de muestra.

@@ -1,0 +1,9 @@
+la interpretación del profesor esta mal en todo aspecto, estadísticamente si rechazas "no rechazas la hipotesis nula" quiere decir que hay igualdad de medias por lo que la interpretacion correcta es que "no hay diferencias"
+
+Sin embargo realizar una prueba t de student así sin mas es algo que estadísticamente esta muy mal hecho, porque para empezar los dataframes tienen mas de 30 observaciones (filas) por lo que se deberia usar una prueba Z en lugar de t de student, las pruebas t de student son para muestras pequeñas (menores a 30)
+
+por otro lado para utilizar una prueba t o Z se debe verificar que las muestras (en este caso los dataframes) se distribuyan normal, que se cumpla el supuesto de homocedaticidad (que tengan igual varianza)
+
+EN conclusión, a nivel de código y experiencia empirica los profesores de PLATZI son muy buenos, sin embargo les falta el componente estadístico, simplemente aplican cosas estadisticas y ya sin conocer la teoria que esta detras de todo.
+
+Soy estudiante de 8vo semestre de estadística y en muchos cursos he visto a los profesores cometer errores conceptuales y aplicar metodos de forma incorrecta.

@@ -1,0 +1,160 @@
+1. ¿Qué es la imputación de valores faltantes?
+
+Estimar los valores ausentes con base en los valores 
+válidos de otras variables y/o 
+casos de muestra o modelos. 
+
+2. ¿Cuál de las siguientes afirmaciones NO es una 
+implicación de los datos Missing Completely 
+At Random (MCAR)?
+
+La imputación es necesaria. 
+
+3. ¿Cuál de las siguientes afirmaciones SÍ es una 
+implicación de los datos Missing At Random (MAR)?
+
+Todas las opciones son correctas. 
+
+4. ¿Cuál de las siguientes afirmaciones SÍ es una 
+implicación de los datos Missing Not At Random (MNAR)?
+
+Todas las opciones son correctas. 
+
+5. Después de examinar tus datos con valores faltantes, 
+tus colegas te sugieren mejorar tu diseño experimental 
+o realizar un análisis de sensibilidad. 
+¿Qué tipo de mecanismo de valores faltantes creen que 
+actúa sobre tus datos? 
+
+MNAR 
+
+6. ¿Qué es la codificación 
+ordinal?
+
+Una codificación ordinal implica mapear cada etiqueta 
+(categoría) única a un valor entero. 
+
+7. Una vez ajustamos y transformamos nuestros datos con 
+codificador, podemos hacer uso de su atributo ____ para 
+obtener las categorías únicas de nuestro conjunto de datos.
+
+encoder.get_categories()
+
+REPASAR CLASE 8. ¿Cuál es una ventaja de realizar 
+one-hot encoding utilizando sklearn en lugar de Pandas?
+
+Realizar one-hot encoding puede llegar a ser más robusto 
+debido a que guarda la información necesaria de las 
+categorías involucradas e incluye una forma de realizar 
+transformaciones inversas. 
+
+9. ¿Cuándo utilizarías una codificación one-hot en lugar 
+de una codificación ordinal?
+
+Cuando mis variables categóricas no tienen un orden natural.
+
+10. ¿Qué son las imputaciones basadas en donantes? 
+Completa los valores que faltan para una unidad dada 
+copiando los valores observados de otra unidad, el donante. 
+
+11. ¿Cuáles son las imputaciones basadas en modelos?
+
+Encuentran un modelo predictivo para cada variable objetivo
+en el conjunto de datos que contiene valores faltantes.
+
+12. ¿Por cuál de las siguientes razones podrías utilizar 
+la imputación por media, mediana y moda?
+
+Todas las opciones son correctas. 
+
+13. ¿Cuál de las siguientes afirmaciones NO es una 
+desventaja de la imputación por llenado hacia atrás y hacia
+adelante?
+
+Relaciones multivariables pueden ser distorsionadas. 
+
+14. Al realizar una imputación por llenado hacia atrás y 
+hacia adelante, existen trucos que pueden ayudarte a 
+enfrentar el problema de que las relaciones multivariables
+puedan ser distorsionadas. 
+¿Cuál de las siguientes opciones NO es uno de estos trucos?
+
+Realiza una imputación con dominios creados completamente
+al azar. 
+ 
+15. ¿Cuál de las siguientes afirmaciones es una desventaja
+de la imputación por interpolación?
+
+Puede introducir valores fuera de rango. 
+
+16. ¿Cuál de las siguientes afirmaciones NO es una desventaja
+de la imputación por K-vecinos más cercanos (KNN)?
+
+Buen rendimiento con conjuntos de datos pequeños. 
+
+17. El algoritmo de imputación por K-vecinos más cercanos 
+(KNN) es un método de imputación con base en modelos. 
+Esto es:
+
+Falso, es basada en donante.
+
+Necesitas cuantificar la distancia únicamente entre 
+variables numéricas.
+
+¿Cuál de las siguientes métricas de distancia podría 
+ser más útil?
+
+Manhattan 
+
+REPASAR CLASE 19. Necesitas cuantificar la distancia 
+únicamente entre variables categóricas ordinales 
+(tipo factor). 
+¿Cúal de las siguientes métricas de distancia podría ser 
+más útil?
+
+Manhattan 
+
+20. Necesitas cuantificar la distancia únicamente
+entre variables categóricas sin un orden natural. 
+¿Cuál de las siguientes métricas de distancia podría ser 
+más útil?
+
+Hamming 
+
+21. Necesitas cuantificar la distancia entre variables de 
+distintos tipos (númericas, categóricas). 
+¿Cuál de las siguientes métricas de distancia podría ser 
+más útil?
+
+Gower
+
+22. Dependiendo del software utilizado, algunos algoritmos 
+pueden o no ordenar las variables de acuerdo a su valor de
+faltantes. 
+¿Cómo podría afectar esto a los resultados de la imputación? 
+
+La imputación podría estar sesgándose debido a utilizar 
+estimados provenientes de variables con alta cantidad de 
+valores faltantes en lugar de variables con baja o nula 
+cantidad de valores faltantes. 
+
+23. ¿Cuál de las siguientes afirmaciones es una ventaja de 
+la imputación con base en modelos?
+
+Todas las opciones son correctas. 
+
+24. ¿Cuál de las siguientes afirmaciones es una desventaja 
+de Imputaciones Múltiples por Ecuaciones Encadenadas (MICE)?
+
+Para funcionar bien necesitas pensar en el modelo de imputación y el modelo de análisis.
+
+25. ¿La siguiente frase es verdadera o falsa?
+
+Realizar transformaciones a tus datos es un paso 
+fundamental en cada análisis. Por ejemplo, 
+cambio de escalas, cambio de codificaciones, entre otras. 
+No obstante, siempre es útil regresar los datos a su 
+estado natural, ya sea para continuar explorando o 
+comunicar los resultados de forma original.
+
+Verdadera 

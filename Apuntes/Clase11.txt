@@ -1,0 +1,29 @@
+Interpolacion por llenado
+
+# utilizamos la imputacion por relleno hacia adelante
+
+plt.figure(figsize=(20,10))
+
+(
+    airquality_df
+    .select_columns('ozone')    # variable de interes
+    .pipe(                      # graficamos los puntos del ozono
+        lambda df: (
+            df.ozone.ffill().plot(
+                color='red',
+                marker = 'o',
+                alpha=6/9,
+                linestyle='dashed'
+            ),
+            df.ozone.plot(
+                color='#313638',
+                marker='o'
+            )
+        )
+    )
+)
+
+
+Untitled (6).png
+
+Toma el valor del punto anterior y lo rellena hacia adelante. Esta imputacion no sigue el comportamiento de los datos por lo que no es la mas adecuada.

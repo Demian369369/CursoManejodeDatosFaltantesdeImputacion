@@ -1,0 +1,32 @@
+MCAR
+La localización de los valores faltantes en el conjunto de datos ocurren completamente al azar, estos no dependen de ningún otro dato
+
+Eliminación de valores faltantes
+
+Reducción del tamaño de muestra.
+Inferencia limitada.
+No produce sesgos
+Imputación de valores faltantes
+
+De hacerlo bien, no produce sesgos
+La imputación es recomendada sobre la deleción.
+MAR
+La localización de los valores faltantes en el conjunto de datos dependen de otros valores observados.
+
+Eliminación de valores faltantes
+
+Ignorarlos produce sesgos
+Imputación de valores faltantes
+
+La mayor parte de métodos de imputación asumen MAR
+La imputación es necesaria
+MNAR
+La localización de los valores faltantes en el conjunto de datos dependen de otros valores faltantes en sí mismos.
+
+Eliminación de valores faltantes
+
+Ignorarlos produce sesgos
+Imputación de valores faltantes
+
+La imputación es recomendada sobre la deleción.
+💡 Mejorar experimentos o realizar análisis de sensibilidad (repetir los experimentos, explorar los parámetros, ver como cambian los análisis al modificar algunos datos y establecer intervalos de confianza)

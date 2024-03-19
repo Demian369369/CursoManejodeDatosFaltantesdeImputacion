@@ -1,0 +1,113 @@
+ransformacion Inversa de los datos
+Una vez realizado el procesamiento de los datos faltantes sobre variables categoricas que estan representadas por numeros, el siguiente paso es transformar dichas variables en texto nuevamente para dar una mejor interpretacion a los resultados.
+
+Utilizamos los datos nhane_mice_df que son los que queremos transformar
+
+ # creamos una copia del dataframe
+
+nhanes_imputed_df = nhanes_mice_df.copy(deep=True)
+Mostrar las transformaciones hechas a los datos
+
+(
+    categorical_transformer # funcion que transforma los valores
+    .named_transformers_    # nombre de las transformaciones realizadas a los datos
+)
+
+--> {'ordinalencoder': OrdinalEncoder(), 'remainder': 'passthrough'}
+Accedemos al codificador de interes
+
+# en este caso a ordinalencoder
+
+(
+    categorical_transformer # funcion que transforma los valores
+    .named_transformers_    # nombre de las transformaciones realizadas a los datos
+    .ordinalencoder
+)
+Finalmente accedemos a la funcion inversa para aplicar sobre los datos ordinalencoder
+
+# las variables estan guardadas en categorical_columns
+
+(
+    categorical_transformer # funcion que transforma los valores
+    .named_transformers_    # nombre de las transformaciones realizadas a los datos
+    .ordinalencoder
+    .inverse_transform(
+        X=nhanes_mice_df[categorical_columns]
+    )
+)
+
+--> array([['Good', 'Female'],
+       ['Very good', 'Male'],
+       ['Good', 'Male'],
+       ...,
+       ['Good', 'Female'],
+       ['Very good', 'Female'],
+       ['Good', 'Male']], dtype=object)
+Guardamos los datos transformados en el df nhanes_imputed_df
+
+
+nhanes_imputed_df[categorical_columns] = (
+    categorical_transformer # funcion que transforma los valores
+    .named_transformers_    # nombre de las transformaciones realizadas a los datos
+    .ordinalencoder
+    .inverse_transform(
+        X=nhanes_mice_df[categorical_columns]
+    )
+)
+
+nhanes_imputed_df
+
+
+Untitled (3).png
+
+Comparar las variables antes y despues de la imputacion
+
+# cantidad para cada categoria del estado de salud. Valores sin imputar
+
+nhanes_df.general_health_condition.value_counts()
+
+--> Good         2383
+Very good    1503
+Fair or      1130
+Excellent     612
+Poor?         169
+Name: general_health_condition, dtype: int64
+
+# cantidad para cada categoria del estado de salud. Valores imputados
+
+nhanes_imputed_df.general_health_condition.value_counts()
+
+--> Good         3743
+Very good    1503
+Fair or      1130
+Excellent     612
+Poor?         169
+Name: general_health_condition, dtype: int64
+Verificar que no hayan quedado valores faltantes
+
+nhanes_imputed_df.missing.number_missing()
+
+--> 0
+
+sns.jointplot(
+    data=nhanes_df,
+    x = 'height',
+    y = 'weight',
+    hue = 'gender',
+    kind='scatter'
+)
+sns.jointplot(
+    data=nhanes_final_df,
+    x = 'height',
+    y = 'weight',
+    hue = 'gender',
+    kind='scatter'
+)
+(
+    nhanes_final_df
+    .missing.scatter_imputation_plot(
+        x='height',
+        y='weight',
+        show_marginal=True
+    )
+)

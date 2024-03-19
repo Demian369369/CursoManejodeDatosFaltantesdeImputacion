@@ -1,0 +1,65 @@
+Amplía tu conjunto de herramientas para explorar valores faltantes
+
+fig, ax = plt.subplots(figsize=(10,10))
+
+(
+    nhanes_df
+    .select_columns('weight','general_health_condition','gender')
+    .assign(
+        weight = lambda df: df.weight.isna().replace([True,False],['NA','!NA'])
+    )
+    .groupby(
+        ['gender','general_health_condition','weight'],
+        dropna=False,
+        as_index = True
+    )
+    .size()
+    .pipe(
+        lambda df: mosaic(
+            data = df,
+            properties=lambda key: {'color':'r' if 'NA' in key else 'gray'},
+            horizontal=True,
+            axes_label=True,
+            title='',
+            labelizer=lambda key: '',
+            ax = ax
+        )
+    )
+);
+
+
+def missing_mosaic_plot(
+        self,
+        categorical_variable_1: str,
+        categorical_variable_2: str,
+        missing_data_variable, str,
+):
+
+    fig, ax = plt.subplots(figsize = (15, 10))
+
+    (
+        self
+        .select_columns(f"{missing_data_variable}", f"{categorical_variable_1}", f"{categorical_variable_2}")
+        .assign(
+            weight = lambda df : df[f"{missing_data_variable}"].isna().replace([True, False], ["NA", "¡NA"])
+        )
+        .groupby(
+            [f"{categorical_variable_1}", f"{categorical_variable_2}", f"{missing_data_variable}"],
+            dropna = False,
+            as_index = True
+        )
+        .size()
+        .pipe(
+            lambda df : mosaic(
+                data = df,
+                properties = lambda key : {"color":"r" if "NA" in key else "gray"},
+                horizontal = True,
+                axes_label = True,
+                title = " ",
+                
+                labelizer = lambda key: " ",
+                ax = ax
+            )
+        )
+
+    ) ;
